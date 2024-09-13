@@ -1,6 +1,6 @@
 import { Task, ViewMode } from "../types/public-types";
-import DateTimeFormatOptions = Intl.DateTimeFormatOptions;
-import DateTimeFormat = Intl.DateTimeFormat;
+
+
 
 type DateHelperScales =
   | "year"
@@ -11,19 +11,24 @@ type DateHelperScales =
   | "second"
   | "millisecond";
 
-const intlDTCache = {};
-export const getCachedDateTimeFormat = (
-  locString: string | string[],
-  opts: DateTimeFormatOptions = {}
-): DateTimeFormat => {
-  const key = JSON.stringify([locString, opts]);
-  let dtf = intlDTCache[key];
-  if (!dtf) {
-    dtf = new Intl.DateTimeFormat(locString, opts);
-    intlDTCache[key] = dtf;
+  interface IntlDTCache {
+    [key: string]: Intl.DateTimeFormat;
   }
-  return dtf;
-};
+  
+  const intlDTCache: IntlDTCache = {};
+
+  export const getCachedDateTimeFormat = (
+    locString: string | string[],
+    opts: Intl.DateTimeFormatOptions = {}
+  ): Intl.DateTimeFormat => {
+    const key = JSON.stringify([locString, opts]);
+    let dtf = intlDTCache[key];
+    if (!dtf) {
+      dtf = new Intl.DateTimeFormat(locString, opts);
+      intlDTCache[key] = dtf;
+    }
+    return dtf;
+  };
 
 export const addToDate = (
   date: Date,

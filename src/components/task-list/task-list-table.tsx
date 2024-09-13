@@ -2,7 +2,11 @@ import React, { useMemo } from "react";
 import styles from "./task-list-table.module.css";
 import { Task } from "../../types/public-types";
 
-const localeDateStringCache = {};
+interface DateStringCache {
+  [key: string]: string;
+}
+const localeDateStringCache: DateStringCache = {};
+
 const toLocaleDateStringFactory =
   (locale: string) =>
   (date: Date, dateTimeOptions: Intl.DateTimeFormatOptions) => {
@@ -14,6 +18,8 @@ const toLocaleDateStringFactory =
     }
     return lds;
   };
+
+
 const dateTimeOptions: Intl.DateTimeFormatOptions = {
   weekday: "short",
   year: "numeric",

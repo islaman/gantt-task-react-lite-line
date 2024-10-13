@@ -80,8 +80,17 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
     }
   };
 
-  // Detectar si la tarea tiene progreso del 100%
-  const isProgressComplete = task.progress === 100;
+  // Asegúrate de que task.progress sea un número
+  const progress = typeof task.progress === 'number' ? task.progress : 0;
+  const isProgressComplete = progress === 100;
+
+  // Para depuración
+  console.log(`Task: ${task.name}, Progress: ${progress}, IsComplete: ${isProgressComplete}`);
+
+  const textColor = isProgressComplete ? "#000" : "#fff";
+
+  // Para depuración
+  console.log(`Text color for ${task.name}: ${textColor}`);
 
   return (
     <g
@@ -114,15 +123,12 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
       <text
         x={getX()}
         y={task.y + taskHeight * 0.5}
-        className={
-          isTextInside
-            ? style.barLabel
-            : style.barLabel && style.barLabelOutside
-        }
+        className={`${style.barLabel} ${!isTextInside ? style.barLabelOutside : ''}`}
         ref={textRef}
-        fill={isProgressComplete ? "#000" : "#fff"}
+        fill={textColor}
+        style={{color: textColor}} // Agregar estilo inline como respaldo
       >
-       
+        {task.name}
       </text>
     </g>
   );

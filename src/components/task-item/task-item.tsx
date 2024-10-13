@@ -122,7 +122,7 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
         ref={textRef}
         fill={isProgressComplete ? "#000" : "#fff"}
       >
-        {task.name}
+       
       </text>
     </g>
   );

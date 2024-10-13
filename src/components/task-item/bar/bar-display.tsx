@@ -7,6 +7,7 @@ type BarDisplayProps = {
   width: number;
   height: number;
   isSelected: boolean;
+  /* progress start point */
   progressX: number;
   progressWidth: number;
   barCornerRadius: number;
@@ -39,22 +40,27 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
     return isSelected ? styles.backgroundSelectedColor : styles.backgroundColor;
   };
 
+  // Comprobamos si el progreso está completo
+  const isProgressComplete = progressWidth === width;
+
   return (
     <g onMouseDown={onMouseDown}>
-      {/* Definimos el patrón de cuadros */}
+      {/* Definimos el patrón de cuadros si el progreso está completo */}
       <defs>
-        <pattern
-          id="gridPattern"
-          width="10"
-          height="10"
-          patternUnits="userSpaceOnUse"
-        >
-          <rect width="5" height="5" fill={getBarColor()} />
-          <rect x="5" y="5" width="5" height="5" fill={getBarColor()} />
-        </pattern>
+        {isProgressComplete && (
+          <pattern
+            id="gridPattern"
+            width="10"
+            height="10"
+            patternUnits="userSpaceOnUse"
+          >
+            <rect width="5" height="5" fill={getBarColor()} />
+            <rect x="5" y="5" width="5" height="5" fill={getBarColor()} />
+          </pattern>
+        )}
       </defs>
 
-      {/* Aplicamos el patrón al rectángulo de fondo */}
+      {/* Fondo de la barra */}
       <rect
         x={x}
         width={width}
@@ -62,9 +68,11 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
         height={height}
         ry={barCornerRadius}
         rx={barCornerRadius}
-        fill="url(#gridPattern)"
+        fill={getBarColor()}
         className={style.barBackground}
       />
+
+      {/* Barra de progreso */}
       <rect
         x={progressX}
         width={progressWidth}
@@ -74,6 +82,19 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
         rx={barCornerRadius}
         fill={getProcessColor()}
       />
+
+      {/* Si el progreso está completo, aplicamos el patrón de cuadros */}
+      {isProgressComplete && (
+        <rect
+          x={progressX}
+          width={progressWidth}
+          y={y}
+          height={height}
+          ry={barCornerRadius}
+          rx={barCornerRadius}
+          fill="url(#gridPattern)"
+        />
+      )}
     </g>
   );
 };

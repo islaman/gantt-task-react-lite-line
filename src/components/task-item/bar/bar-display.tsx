@@ -7,7 +7,6 @@ type BarDisplayProps = {
   width: number;
   height: number;
   isSelected: boolean;
-  /* progress start point */
   progressX: number;
   progressWidth: number;
   barCornerRadius: number;
@@ -42,6 +41,9 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
 
   // Detectamos si el progreso es del 100%
   const isProgressComplete = progressWidth >= width;
+
+  // El color del texto cambia si el progreso está completo
+  const textColor = isProgressComplete ? "#000" : "#fff"; // Negro si el progreso es 100%, blanco en otro caso.
 
   return (
     <g onMouseDown={onMouseDown}>
@@ -81,8 +83,20 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
         height={height}
         ry={barCornerRadius}
         rx={barCornerRadius}
-        fill={isProgressComplete ? "url(#gridPattern)" : getProcessColor()} // Aplicar el patrón si el progreso está completo
+        fill={isProgressComplete ? "url(#gridPattern)" : getProcessColor()}
       />
+
+      {/* Texto de la barra */}
+      <text
+        x={x + width / 2}
+        y={y + height / 2}
+        fill={textColor} // Cambia el color del texto según el progreso
+        dominantBaseline="middle"
+        textAnchor="middle"
+        className={style.barLabel} // Usa la clase existente para el estilo del texto
+      >
+        {isProgressComplete ? "Completado" : "En progreso"} {/* Texto de ejemplo */}
+      </text>
     </g>
   );
 };

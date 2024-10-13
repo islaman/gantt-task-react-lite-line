@@ -19,6 +19,7 @@ type BarDisplayProps = {
   };
   onMouseDown: (event: React.MouseEvent<SVGPolygonElement, MouseEvent>) => void;
 };
+
 export const BarDisplay: React.FC<BarDisplayProps> = ({
   x,
   y,
@@ -31,16 +32,28 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
   styles,
   onMouseDown,
 }) => {
+  const getBarColor = () => {
+    // Si el progreso es 100%, usa el patrón de cuadrados
+    if (progressWidth >= width) {
+      return "url(#checker-pattern)";
+    }
+    return isSelected ? styles.backgroundSelectedColor : styles.backgroundColor;
+  };
+
   const getProcessColor = () => {
     return isSelected ? styles.progressSelectedColor : styles.progressColor;
   };
 
-  const getBarColor = () => {
-    return isSelected ? styles.backgroundSelectedColor : styles.backgroundColor;
-  };
-
   return (
     <g onMouseDown={onMouseDown}>
+      <svg width="0" height="0">
+        <defs>
+          <pattern id="checker-pattern" width="10" height="10" patternUnits="userSpaceOnUse">
+            <rect width="5" height="5" fill="black" />
+            <rect x="5" y="5" width="5" height="5" fill="black" />
+          </pattern>
+        </defs>
+      </svg>
       <rect
         x={x}
         width={width}
@@ -48,7 +61,7 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
         height={height}
         ry={barCornerRadius}
         rx={barCornerRadius}
-        fill={getBarColor()}
+        fill={getBarColor()} // Ahora aplicamos el patrón aquí
         className={style.barBackground}
       />
       <rect

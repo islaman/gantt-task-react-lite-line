@@ -42,8 +42,6 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
   // Detectamos si el progreso es del 100%
   const isProgressComplete = progressWidth >= width;
 
-  // El color del texto cambia si el progreso está completo
-  const textColor = isProgressComplete ? "#000" : "#fff"; // Negro si el progreso es 100%, blanco en otro caso.
 
   return (
     <g onMouseDown={onMouseDown}>

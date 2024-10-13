@@ -41,8 +41,8 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
   };
 
   // Detectamos si el progreso es del 100%
-  const isProgressComplete = progressWidth >= width; // Verificamos si el progreso abarca toda la barra
-console.log(`progreso completo ${isProgressComplete}` )
+  const isProgressComplete = progressWidth >= width;
+
   return (
     <g onMouseDown={onMouseDown}>
       {/* Definimos el patrón de cuadros si el progreso es del 100% */}
@@ -53,6 +53,9 @@ console.log(`progreso completo ${isProgressComplete}` )
           height="10"
           patternUnits="userSpaceOnUse"
         >
+          {/* Color de fondo del patrón igual al color de progreso */}
+          <rect width="10" height="10" fill={getProcessColor()} />
+          {/* Los cuadros se mantienen blancos */}
           <rect width="5" height="5" fill="white" />
           <rect x="5" y="5" width="5" height="5" fill="white" />
         </pattern>
@@ -70,7 +73,7 @@ console.log(`progreso completo ${isProgressComplete}` )
         className={style.barBackground}
       />
 
-      {/* Barra de progreso */}
+      {/* Barra de progreso con patrón o color */}
       <rect
         x={progressX}
         width={progressWidth}

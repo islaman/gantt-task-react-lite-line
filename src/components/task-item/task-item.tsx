@@ -81,7 +81,6 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
   };
 
   const isProgressComplete = task.progress === 100;
-  const textColor = isProgressComplete ? "#000" : "#fff";
   const labelClassName = `${style.barLabel} ${isProgressComplete ? style.barLabelComplete : ''} ${!isTextInside ? style.barLabelOutside : ''}`;
 
   return (

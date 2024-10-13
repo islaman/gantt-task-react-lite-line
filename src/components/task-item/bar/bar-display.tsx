@@ -36,9 +36,6 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
   };
 
   const getBarColor = () => {
-    alert(`progreessx ${progressX}`)
-    alert(`progreessw ${progressWidth}`)
-    alert(`w ${width}`)
     return isSelected ? styles.backgroundSelectedColor : styles.backgroundColor;
   };
 

@@ -19,6 +19,7 @@ type BarDisplayProps = {
   };
   onMouseDown: (event: React.MouseEvent<SVGPolygonElement, MouseEvent>) => void;
 };
+
 export const BarDisplay: React.FC<BarDisplayProps> = ({
   x,
   y,
@@ -39,8 +40,25 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
     return isSelected ? styles.backgroundSelectedColor : styles.backgroundColor;
   };
 
+  // Detectamos si el progreso es del 100%
+  const isProgressComplete = progressWidth >= width; // Verificamos si el progreso abarca toda la barra
+console.log(`progreso completo ${isProgressComplete}` )
   return (
     <g onMouseDown={onMouseDown}>
+      {/* Definimos el patrón de cuadros si el progreso es del 100% */}
+      <defs>
+        <pattern
+          id="gridPattern"
+          width="10"
+          height="10"
+          patternUnits="userSpaceOnUse"
+        >
+          <rect width="5" height="5" fill="white" />
+          <rect x="5" y="5" width="5" height="5" fill="white" />
+        </pattern>
+      </defs>
+
+      {/* Fondo de la barra */}
       <rect
         x={x}
         width={width}
@@ -51,6 +69,8 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
         fill={getBarColor()}
         className={style.barBackground}
       />
+
+      {/* Barra de progreso */}
       <rect
         x={progressX}
         width={progressWidth}
@@ -58,7 +78,7 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
         height={height}
         ry={barCornerRadius}
         rx={barCornerRadius}
-        fill={getProcessColor()}
+        fill={isProgressComplete ? "url(#gridPattern)" : getProcessColor()} // Aplicar el patrón si el progreso está completo
       />
     </g>
   );

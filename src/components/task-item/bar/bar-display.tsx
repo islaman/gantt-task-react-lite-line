@@ -19,7 +19,6 @@ type BarDisplayProps = {
   };
   onMouseDown: (event: React.MouseEvent<SVGPolygonElement, MouseEvent>) => void;
 };
-
 export const BarDisplay: React.FC<BarDisplayProps> = ({
   x,
   y,
@@ -37,32 +36,14 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
   };
 
   const getBarColor = () => {
+    alert(`progreessx ${progressX}`)
+    alert(`progreessw ${progressWidth}`)
+    alert(`w ${width}`)
     return isSelected ? styles.backgroundSelectedColor : styles.backgroundColor;
   };
 
-  // Comprobamos si el progreso está completo
-  const isProgressComplete = progressX + progressWidth >= x + width;
-
-  console.log('Progress Complete:', isProgressComplete);
-
   return (
     <g onMouseDown={onMouseDown}>
-      {/* Definimos el patrón de cuadros si el progreso está completo */}
-      <defs>
-        {isProgressComplete && (
-          <pattern
-            id="gridPattern"
-            width="10"
-            height="10"
-            patternUnits="userSpaceOnUse"
-          >
-            <rect width="5" height="5" fill={getBarColor()} />
-            <rect x="5" y="5" width="5" height="5" fill={getBarColor()} />
-          </pattern>
-        )}
-      </defs>
-
-      {/* Fondo de la barra */}
       <rect
         x={x}
         width={width}
@@ -73,8 +54,6 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
         fill={getBarColor()}
         className={style.barBackground}
       />
-
-      {/* Barra de progreso */}
       <rect
         x={progressX}
         width={progressWidth}
@@ -84,19 +63,6 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
         rx={barCornerRadius}
         fill={getProcessColor()}
       />
-
-      {/* Si el progreso está completo, aplicamos el patrón de cuadros */}
-      {isProgressComplete && (
-        <rect
-          x={progressX}
-          width={progressWidth}
-          y={y}
-          height={height}
-          ry={barCornerRadius}
-          rx={barCornerRadius}
-          fill="url(#gridPattern)"
-        />
-      )}
     </g>
   );
 };

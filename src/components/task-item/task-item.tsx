@@ -81,8 +81,7 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
   };
 
   const isProgressComplete = task.progress === 100;
-  const labelClassName = `${style.barLabel} ${isProgressComplete ? style.barLabelComplete : ''} ${!isTextInside ? style.barLabelOutside : ''}`;
-
+  const labelClassName = `${style.barLabel} ${!isTextInside ? style.barLabelOutside : ''}`;
   return (
     <g
       onKeyDown={e => {
@@ -111,14 +110,16 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
       }}
     >
       {taskItem}
-      <text
-        x={getX()}
-        y={task.y + taskHeight * 0.5}
-        className={labelClassName}
-        ref={textRef}
-      >
-        {task.name}
-      </text>
+      {!isProgressComplete && (
+  <text
+    x={getX()}
+    y={task.y + taskHeight * 0.5}
+    className={labelClassName}
+    ref={textRef}
+  >
+    {task.name}
+  </text>
+)}
     </g>
   );
 };

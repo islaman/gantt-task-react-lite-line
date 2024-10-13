@@ -11,9 +11,7 @@
   pointer-events: none;
 }
 
-.barLabelComplete {
-  fill: #000;
-}
+
 
 .barLabelOutside {
   fill: #555;

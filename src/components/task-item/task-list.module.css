@@ -11,6 +11,10 @@
   pointer-events: none;
 }
 
+.barLabelComplete {
+  fill: #000;
+}
+
 .barLabelOutside {
   fill: #555;
   text-anchor: start;

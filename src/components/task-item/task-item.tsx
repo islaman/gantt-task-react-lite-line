@@ -80,17 +80,9 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
     }
   };
 
-  // Asegúrate de que task.progress sea un número
-  const progress = typeof task.progress === 'number' ? task.progress : 0;
-  const isProgressComplete = progress === 100;
-
-  // Para depuración
-  console.log(`Task: ${task.name}, Progress: ${progress}, IsComplete: ${isProgressComplete}`);
-
+  const isProgressComplete = task.progress === 100;
   const textColor = isProgressComplete ? "#000" : "#fff";
-
-  // Para depuración
-  console.log(`Text color for ${task.name}: ${textColor}`);
+  const labelClassName = `${style.barLabel} ${isProgressComplete ? style.barLabelComplete : ''} ${!isTextInside ? style.barLabelOutside : ''}`;
 
   return (
     <g
@@ -123,10 +115,8 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
       <text
         x={getX()}
         y={task.y + taskHeight * 0.5}
-        className={`${style.barLabel} ${!isTextInside ? style.barLabelOutside : ''}`}
+        className={labelClassName}
         ref={textRef}
-        fill={textColor}
-        style={{color: textColor}} // Agregar estilo inline como respaldo
       >
         {task.name}
       </text>

@@ -120,7 +120,7 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
             : style.barLabel && style.barLabelOutside
         }
         ref={textRef}
-        fill={isProgressComplete ? "#000" : "#fff"} // Cambia el color según el progreso
+        fill={isProgressComplete ? "#000" : "#fff"}
       >
         {task.name}
       </text>

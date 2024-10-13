@@ -80,6 +80,9 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
     }
   };
 
+  // Detectar si la tarea tiene progreso del 100%
+  const isProgressComplete = task.progress === 100;
+
   return (
     <g
       onKeyDown={e => {
@@ -117,6 +120,7 @@ export const TaskItem: React.FC<TaskItemProps> = props => {
             : style.barLabel && style.barLabelOutside
         }
         ref={textRef}
+        fill={isProgressComplete ? "#000" : "#fff"} // Cambia el color según el progreso
       >
         {task.name}
       </text>

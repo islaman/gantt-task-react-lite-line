@@ -86,17 +86,6 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
         fill={isProgressComplete ? "url(#gridPattern)" : getProcessColor()}
       />
 
-      {/* Texto de la barra */}
-      <text
-        x={x + width / 2}
-        y={y + height / 2}
-        fill={textColor} // Cambia el color del texto según el progreso
-        dominantBaseline="middle"
-        textAnchor="middle"
-        className={style.barLabel} // Usa la clase existente para el estilo del texto
-      >
-        {isProgressComplete ? "Completado" : "En progreso"} {/* Texto de ejemplo */}
-      </text>
     </g>
   );
 };

@@ -41,7 +41,9 @@ export const BarDisplay: React.FC<BarDisplayProps> = ({
   };
 
   // Comprobamos si el progreso está completo
-  const isProgressComplete = progressWidth === width;
+  const isProgressComplete = progressX + progressWidth >= x + width;
+
+  console.log('Progress Complete:', isProgressComplete);
 
   return (
     <g onMouseDown={onMouseDown}>

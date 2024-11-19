@@ -74,29 +74,30 @@ export const Project: React.FC<TaskItemProps> = ({ task, isSelected }) => {
 
       {/* Renderizar estos elementos solo si el nombre del proyecto no es "TRAMITACIÓN" */}
       {task.name !== "TRAMITACIÓN" && (
-        <>
-          <rect
-            fill={barColor}
-            x={task.x1}
-            width={projectWidth}
-            y={task.y}
-            height={task.height / 2}
-            rx={task.barCornerRadius}
-            ry={task.barCornerRadius}
-            className={styles.projectTop}
-          />
-          <polygon
-            className={styles.projectTop}
-            points={projectLeftTriangle}
-            fill={barColor}
-          />
-          <polygon
-            className={styles.projectTop}
-            points={projectRightTriangle}
-            fill={barColor}
-          />
-        </>
-      )}
+  <React.Fragment>
+    <rect
+      fill={barColor}
+      x={task.x1}
+      width={projectWidth}
+      y={task.y}
+      height={task.height / 2}
+      rx={task.barCornerRadius}
+      ry={task.barCornerRadius}
+      className={styles.projectTop}
+    />
+    <polygon
+      className={styles.projectTop}
+      points={projectLeftTriangle}
+      fill={barColor}
+    />
+    <polygon
+      className={styles.projectTop}
+      points={projectRightTriangle}
+      fill={barColor}
+    />
+  </React.Fragment>
+)}
+
     </g>
   );
 };

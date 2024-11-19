@@ -17,10 +17,6 @@ export const Arrow: React.FC<ArrowProps> = ({
   arrowIndent,
   rtl,
 }) => {
-  // Incrementar el margen horizontal para las tareas dentro de "TRAMITACIÓN"
-  const adjustedArrowIndent =
-    taskFrom.project === "TRAMITACIÓN" ? arrowIndent * 3 : arrowIndent;
-
   let path: string;
   let trianglePoints: string;
   if (rtl) {
@@ -29,7 +25,7 @@ export const Arrow: React.FC<ArrowProps> = ({
       taskTo,
       rowHeight,
       taskHeight,
-      adjustedArrowIndent
+      arrowIndent
     );
   } else {
     [path, trianglePoints] = drownPathAndTriangle(
@@ -37,7 +33,7 @@ export const Arrow: React.FC<ArrowProps> = ({
       taskTo,
       rowHeight,
       taskHeight,
-      adjustedArrowIndent
+      arrowIndent
     );
   }
 

@@ -263,22 +263,27 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
   return (
     <g className="content">
       <g className="arrows" fill={arrowColor} stroke={arrowColor}>
-        {tasks.map(task => {
-          return task.barChildren.map(child => {
-            return (
-              <Arrow
-                key={`Arrow from ${task.id} to ${tasks[child.index].id}`}
-                taskFrom={task}
-                taskTo={tasks[child.index]}
-                rowHeight={rowHeight}
-                taskHeight={taskHeight}
-                arrowIndent={arrowIndent}
-                rtl={rtl}
-              />
-            );
-          });
-        })}
-      </g>
+    {tasks.map(task => {
+      return task.barChildren.map(child => {
+        // Verificar si las tareas están dentro de un proyecto llamado "TRAMITACIÓN"
+        const isTramitacion = task.project === "TRAMITACIÓN";
+        // Ajustar el arrowIndent dinámicamente
+        const adjustedArrowIndent = isTramitacion ? arrowIndent / 2 : arrowIndent;
+
+        return (
+          <Arrow
+            key={`Arrow from ${task.id} to ${tasks[child.index].id}`}
+            taskFrom={task}
+            taskTo={tasks[child.index]}
+            rowHeight={rowHeight}
+            taskHeight={taskHeight}
+            arrowIndent={adjustedArrowIndent}
+            rtl={rtl}
+          />
+        );
+      });
+    })}
+  </g>
       <g className="bar" fontFamily={fontFamily} fontSize={fontSize}>
         {tasks.map(task => {
           return (

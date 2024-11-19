@@ -265,6 +265,11 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
       <g className="arrows" fill={arrowColor} stroke={arrowColor}>
         {tasks.map(task => {
           return task.barChildren.map(child => {
+            // Calcular un arrowIndent dinámico basado en la jerarquía
+            const dynamicArrowIndent = task.project === "AGRUPADOR1" 
+              ? arrowIndent 
+              : arrowIndent / 2;
+              
             return (
               <Arrow
                 key={`Arrow from ${task.id} to ${tasks[child.index].id}`}
@@ -272,7 +277,7 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
                 taskTo={tasks[child.index]}
                 rowHeight={rowHeight}
                 taskHeight={taskHeight}
-                arrowIndent={arrowIndent}
+                arrowIndent={dynamicArrowIndent}
                 rtl={rtl}
               />
             );
@@ -281,10 +286,15 @@ export const TaskGanttContent: React.FC<TaskGanttContentProps> = ({
       </g>
       <g className="bar" fontFamily={fontFamily} fontSize={fontSize}>
         {tasks.map(task => {
+          // Ajustar el arrowIndent para las barras basado en la jerarquía
+          const taskArrowIndent = task.project === "AGRUPADOR1" 
+            ? arrowIndent 
+            : arrowIndent / 2;
+            
           return (
             <TaskItem
               task={task}
-              arrowIndent={arrowIndent}
+              arrowIndent={taskArrowIndent}
               taskHeight={taskHeight}
               isProgressChangeable={!!onProgressChange && !task.isDisabled}
               isDateChangeable={!!onDateChange && !task.isDisabled}

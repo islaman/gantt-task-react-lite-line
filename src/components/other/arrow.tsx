@@ -9,6 +9,7 @@ type ArrowProps = {
   arrowIndent: number;
   rtl: boolean;
 };
+
 export const Arrow: React.FC<ArrowProps> = ({
   taskFrom,
   taskTo,
@@ -17,6 +18,15 @@ export const Arrow: React.FC<ArrowProps> = ({
   arrowIndent,
   rtl,
 }) => {
+  // Verificar si la tarea pertenece a un proyecto llamado "TRAMITACIÓN"
+  const isFromInsideTramitacion = taskFrom.project === "TRAMITACIÓN";
+  const isFromProgressComplete = taskFrom.progress === 100;
+
+  // Si pertenece a "TRAMITACIÓN" y tiene progreso 100, no renderizar la flecha
+  if (isFromInsideTramitacion && isFromProgressComplete) {
+    return null;
+  }
+
   let path: string;
   let trianglePoints: string;
   if (rtl) {
@@ -44,6 +54,7 @@ export const Arrow: React.FC<ArrowProps> = ({
     </g>
   );
 };
+
 
 const drownPathAndTriangle = (
   taskFrom: BarTask,

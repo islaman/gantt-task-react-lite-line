@@ -55,22 +55,31 @@ const drownPathAndTriangle = (
   const indexCompare = taskFrom.index > taskTo.index ? -1 : 1;
   const taskToEndPosition = taskTo.y + taskHeight / 2;
   
-  // Reducir el espacio horizontal para las flechas
-  const taskFromEndPosition = taskFrom.x2 + arrowIndent; // Reducido de arrowIndent * 2
+  // Calcular el nivel de profundidad basado en el ID de la tarea
+  const getTaskDepth = (task: BarTask) => {
+    return task.id.split('.').length - 1;
+  };
   
-  // Ajustar el offset horizontal basado en la jerarquía
-  const hierarchyOffset = taskFrom.project === "AGRUPADOR1" ? arrowIndent : arrowIndent / 2;
+  // Calcular el indent basado en el nivel de profundidad
+  const depth = getTaskDepth(taskFrom);
+  const baseIndent = arrowIndent / 2; // Reducimos el indent base
+  const depthIndent = depth * baseIndent;
+  
+  const taskFromEndPosition = taskFrom.x2 + depthIndent;
   
   const taskFromHorizontalOffsetValue =
-    taskFromEndPosition < taskTo.x1 ? "" : `H ${taskTo.x1 - hierarchyOffset}`;
-    
+    taskFromEndPosition < taskTo.x1 
+      ? "" 
+      : `H ${taskTo.x1 - depthIndent}`;
+      
   const taskToHorizontalOffsetValue =
     taskFromEndPosition > taskTo.x1
-      ? hierarchyOffset
-      : taskTo.x1 - taskFrom.x2 - hierarchyOffset;
+      ? depthIndent
+      : taskTo.x1 - taskFrom.x2 - depthIndent;
 
+  // Ajustamos el path para tener en cuenta la profundidad
   const path = `M ${taskFrom.x2} ${taskFrom.y + taskHeight / 2} 
-  h ${hierarchyOffset} 
+  h ${depthIndent} 
   v ${(indexCompare * rowHeight) / 2} 
   ${taskFromHorizontalOffsetValue}
   V ${taskToEndPosition} 
@@ -79,6 +88,7 @@ const drownPathAndTriangle = (
   const trianglePoints = `${taskTo.x1},${taskToEndPosition} 
   ${taskTo.x1 - 5},${taskToEndPosition - 5} 
   ${taskTo.x1 - 5},${taskToEndPosition + 5}`;
+  
   return [path, trianglePoints];
 };
 

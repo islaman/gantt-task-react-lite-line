@@ -76,8 +76,16 @@ export const TaskListTableDefault: React.FC<{
               const row = document.querySelector('.scroll') as HTMLElement;
               if (row) {
                 const scrollTop = row.scrollTop;
+                const scrollLeft = row.scrollLeft || 0;
+                
+                // Guardar posición y datos adicionales en localStorage
                 localStorage.setItem("ganttScrollTop", String(scrollTop));
-                localStorage.setItem("ganttSelectedTaskId", task.id);
+                localStorage.setItem("ganttScrollLeft", String(scrollLeft));
+                localStorage.setItem("ganttSelectedTaskId", t.id); // Corregido: t.id en lugar de task.id
+                localStorage.setItem("ganttScrollTimestamp", String(Date.now()));
+                
+                // Si quieres mostrar los valores para debug (puedes quitar esto después)
+                alert(`Posición guardada - Top: ${scrollTop}px, Left: ${scrollLeft}px, Tarea: ${t.id}`);
               }
             }}
           >

@@ -18,11 +18,27 @@ export const VerticalScroll: React.FC<{
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
+  // Restaurar scroll guardado al montar
+  useEffect(() => {
+    const saved = localStorage.getItem("ganttScrollTop");
+    if (scrollRef.current && saved) {
+      scrollRef.current.scrollTop = parseInt(saved);
+    }
+  }, []);
+
+  // Aplicar scroll si cambia prop `scroll`
   useEffect(() => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scroll;
     }
   }, [scroll]);
+
+  // Guardar scroll al hacer scroll manual
+  const handleScroll = (e: SyntheticEvent<HTMLDivElement>) => {
+    const el = e.currentTarget;
+    localStorage.setItem("ganttScrollTop", String(el.scrollTop));
+    onScroll(e); // mantener comportamiento existente
+  };
 
   return (
     <div
@@ -32,7 +48,7 @@ export const VerticalScroll: React.FC<{
         marginLeft: rtl ? "" : "-1rem",
       }}
       className={styles.scroll}
-      onScroll={onScroll}
+      onScroll={handleScroll}
       ref={scrollRef}
     >
       <div style={{ height: ganttFullHeight, width: 1 }} />

@@ -72,6 +72,14 @@ export const TaskListTableDefault: React.FC<{
             className={styles.taskListTableRow}
             style={{ height: rowHeight }}
             key={`${t.id}row`}
+            onClick={() => {
+              const row = document.querySelector('.scroll') as HTMLElement;
+              if (row) {
+                const scrollTop = row.scrollTop;
+                localStorage.setItem("ganttScrollTop", String(scrollTop));
+                localStorage.setItem("ganttSelectedTaskId", task.id);
+              }
+            }}
           >
             <div
               className={styles.taskListCell}
